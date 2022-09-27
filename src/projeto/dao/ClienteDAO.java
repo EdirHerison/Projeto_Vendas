@@ -4,9 +4,12 @@
  */
 package projeto.dao;
 
+import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import projeto.connection.ConnectionFactory;
 import projeto.model.Clientes;
@@ -61,12 +64,41 @@ public class ClienteDAO {
         
     }
     
-    public void alterarCliente(){
-        
-    }
-    
-    public void deletarCliente(){
-        
+    public List<Clientes> listarClientes(){
+        try {
+            
+            List<Clientes> lista = new ArrayList<>();
+            String sql = "SELECT * FROM tb_clientes";
+            PreparedStatement st = conn.prepareStatement(sql);
+            
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()){
+                Clientes obj = new Clientes();
+                obj.setId(rs.getInt("id"));
+                obj.setNome(rs.getString("nome"));
+                obj.setRg(rs.getString("rg"));
+                obj.setCpf(rs.getString("cpf"));
+                obj.setEmail(rs.getString("email"));
+                obj.setCelular(rs.getString("celular"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCep(rs.getString("cep"));
+                obj.setEndereco(rs.getString("enderco"));
+                obj.setNumero(rs.getInt("numero"));
+                obj.setComplemento(rs.getString("complemento"));
+                obj.setBairro(rs.getString("bairro"));
+                obj.setCidade(rs.getString("cidade"));
+                obj.setEstado(rs.getString("estado"));
+                
+                lista.add(obj);
+            }
+            
+            return lista;
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Erro !!" + e);
+            return null;
+        }
     }
     
 }

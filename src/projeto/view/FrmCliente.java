@@ -5,6 +5,8 @@
  */
 package projeto.view;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import projeto.dao.ClienteDAO;
 import projeto.model.Clientes;
 
@@ -17,6 +19,34 @@ public class FrmCliente extends javax.swing.JFrame {
     /**
      * Creates new form CadClient
      */
+    
+    public void listar(){
+        ClienteDAO dao = new ClienteDAO();
+        List<Clientes> lista = dao.listarClientes();
+        DefaultTableModel dados = (DefaultTableModel) TbClientes.getModel();
+        dados.setNumRows(0);
+        
+        for(Clientes c : lista){
+         dados.addRow(new Object[]{
+         c.getId(),
+         c.getNome(),
+         c.getRg(),
+         c.getCpf(),
+         c.getEmail(),
+         c.getTelefone(),
+         c.getCelular(),
+         c.getCep(),
+         c.getEndereco(),
+         c.getNumero(),
+         c.getComplemento(),
+         c.getBairro(),
+         c.getCidade(),
+         c.getEstado()       
+         }); 
+        }
+        
+    }
+    
     public FrmCliente() {
         initComponents();
     }
@@ -73,13 +103,18 @@ public class FrmCliente extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         BtPesquisarTabela = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TbClientes = new javax.swing.JTable();
         BtNovoTabela = new javax.swing.JButton();
         BtConsultarTabela = new javax.swing.JButton();
         BtEditarTabela = new javax.swing.JButton();
         BtDeletarTabela = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 102, 0));
 
@@ -357,8 +392,13 @@ public class FrmCliente extends javax.swing.JFrame {
         jLabel17.setText("Nome:");
 
         BtPesquisarTabela.setText("Pesquisar");
+        BtPesquisarTabela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtPesquisarTabelaActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TbClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -366,7 +406,7 @@ public class FrmCliente extends javax.swing.JFrame {
                 "Código", "Nome", "RG", "CPF", "Email", "Telefone", "Celular", "CEP", "Endereço", "Numero", "Complemento", "Bairro", "Cidade", "Estado"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TbClientes);
 
         BtNovoTabela.setText("Novo");
         BtNovoTabela.addActionListener(new java.awt.event.ActionListener() {
@@ -489,6 +529,14 @@ public class FrmCliente extends javax.swing.JFrame {
             dao.cadastrarCliente(cli);
     }//GEN-LAST:event_BtSalvarActionPerformed
 
+    private void BtPesquisarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtPesquisarTabelaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtPesquisarTabelaActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        listar();
+    }//GEN-LAST:event_formWindowActivated
+
     /**
      * @param args the command line arguments
      */
@@ -537,6 +585,7 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JButton BtPesquisarTabela;
     private javax.swing.JButton BtSalvar;
     private javax.swing.JComboBox<String> CbUf;
+    private javax.swing.JTable TbClientes;
     private javax.swing.JTextField TxtBairro;
     private javax.swing.JFormattedTextField TxtCelular;
     private javax.swing.JFormattedTextField TxtCep;
@@ -572,7 +621,6 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }
