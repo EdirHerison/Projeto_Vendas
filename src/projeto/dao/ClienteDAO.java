@@ -55,7 +55,7 @@ public class ClienteDAO {
             st.close();
             
             
-            JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso");
+            JOptionPane.showMessageDialog(null, "Cliente Cadastrado com Sucesso");
             
             
         } catch (SQLException e) {
@@ -89,16 +89,76 @@ public class ClienteDAO {
                 obj.setBairro(rs.getString("bairro"));
                 obj.setCidade(rs.getString("cidade"));
                 obj.setEstado(rs.getString("estado"));
-                
                 lista.add(obj);
             }
-            
-            return lista;
-            
+            return lista; 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,"Erro !!" + e);
             return null;
         }
     }
+    
+    public void alterarCliente(Clientes obj){
+        try {
+
+            String sql = "UPDATE tb_clientes SET "
+                    + "nome=?, "
+                    + "rg=?, "
+                    + "cpf=?, "
+                    + "email=?, "
+                    + "telefone=?, "
+                    + "celular=?, "
+                    + "cep=?, "
+                    + "enderco=?, "
+                    + "numero=?, "
+                    + "complemento=?, "
+                    + "bairro=?, "
+                    + "cidade=?, "
+                    + "estado=? "
+                    + "WHERE id= ?";
+            
+            PreparedStatement st = conn.prepareStatement(sql);
+            
+            st.setString(1, obj.getNome());
+            st.setString(2, obj.getRg());
+            st.setString(3, obj.getCpf());
+            st.setString(4, obj.getEmail());
+            st.setString(5, obj.getTelefone());
+            st.setString(6, obj.getCelular());
+            st.setString(7, obj.getCep());
+            st.setString(8, obj.getEndereco());
+            st.setInt(9, obj.getNumero());
+            st.setString(10, obj.getComplemento());
+            st.setString(11, obj.getBairro());
+            st.setString(12, obj.getCidade());
+            st.setString(13, obj.getEstado());
+            st.setInt(14, obj.getId());
+            
+            st.execute();
+            st.close();
+            
+            
+            JOptionPane.showMessageDialog(null, "Dados do cliente alterados com Sucesso");
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Erro!!" + e);
+        }
+    }
+    
+   public void deletarCliente(Clientes obj){
+       try {
+
+            String sql = "DELETE FROM tb_cliente WHERE id = ?";
+            
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, obj.getId());
+            st.execute();
+            st.close();
+            JOptionPane.showMessageDialog(null, "Cliente Deletado com Sucesso");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Erro!!" + e);
+        }
+   }
     
 }

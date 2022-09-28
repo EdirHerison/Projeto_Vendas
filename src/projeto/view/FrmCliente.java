@@ -223,6 +223,11 @@ public class FrmCliente extends javax.swing.JFrame {
         });
 
         BtExcluir.setText("Excluir");
+        BtExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtExcluirActionPerformed(evt);
+            }
+        });
 
         BtSalvar.setText("Salvar");
         BtSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -234,6 +239,11 @@ public class FrmCliente extends javax.swing.JFrame {
         BtConsultar.setText("Consultar");
 
         BtAlterar.setText("Alterar");
+        BtAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtAlterarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -406,6 +416,11 @@ public class FrmCliente extends javax.swing.JFrame {
                 "Código", "Nome", "RG", "CPF", "Email", "Telefone", "Celular", "CEP", "Endereço", "Numero", "Complemento", "Bairro", "Cidade", "Estado"
             }
         ));
+        TbClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TbClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TbClientes);
 
         BtNovoTabela.setText("Novo");
@@ -536,6 +551,54 @@ public class FrmCliente extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         listar();
     }//GEN-LAST:event_formWindowActivated
+
+    private void TbClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbClientesMouseClicked
+        jTabbedPane1.setSelectedIndex(0);
+        TxtCodigo.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 0).toString());
+        TxtNome.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 1).toString());
+        TxtRg.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 2).toString());
+        TxtCpf.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 3).toString());
+        TxtEmail.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 4).toString());
+        TxtFixo.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 5).toString());
+        TxtCelular.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 6).toString());
+        TxtCep.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 7).toString());
+        TxtEndereco.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 8).toString());
+        TxtNumero.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 9).toString());
+        TxtComplemento.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 10).toString());
+        TxtBairro.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 11).toString());
+        TxtCidade.setText(TbClientes.getValueAt(TbClientes.getSelectedRow(), 12).toString());
+        CbUf.setSelectedItem(TbClientes.getValueAt(TbClientes.getSelectedRow(), 13).toString());
+        
+    }//GEN-LAST:event_TbClientesMouseClicked
+
+    private void BtAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtAlterarActionPerformed
+        Clientes cli = new Clientes();
+            
+            cli.setNome(TxtNome.getText());
+            cli.setRg(TxtRg.getText());
+            cli.setCpf(TxtCpf.getText());
+            cli.setEmail(TxtEmail.getText());
+            cli.setTelefone(TxtFixo.getText());
+            cli.setCelular(TxtCelular.getText());
+            cli.setCep(TxtCep.getText());
+            cli.setEndereco(TxtEndereco.getText());
+            cli.setNumero(Integer.parseInt(TxtNumero.getText()));
+            cli.setComplemento(TxtComplemento.getText());
+            cli.setBairro(TxtBairro.getText());
+            cli.setCidade(TxtCidade.getText());
+            cli.setEstado(CbUf.getSelectedItem().toString());
+            cli.setId(Integer.parseInt(TxtCodigo.getText()));
+            
+            ClienteDAO dao = new ClienteDAO();
+            dao.alterarCliente(cli);
+    }//GEN-LAST:event_BtAlterarActionPerformed
+
+    private void BtExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtExcluirActionPerformed
+       Clientes cli = new Clientes();
+            cli.setId(Integer.parseInt(TxtCodigo.getText()));
+            ClienteDAO dao = new ClienteDAO();
+            dao.deletarCliente(cli);
+    }//GEN-LAST:event_BtExcluirActionPerformed
 
     /**
      * @param args the command line arguments
