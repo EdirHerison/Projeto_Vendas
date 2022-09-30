@@ -98,6 +98,39 @@ public class ClienteDAO {
         }
     }
     
+    public Clientes consultaClienteNome(String nome){
+        try {
+            String sql = "SELECT * FROM tb_clientes WHERE nome=?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, nome);
+            ResultSet rs = st.executeQuery();
+            Clientes obj = new Clientes();
+            
+            if(rs.next()){
+                
+                obj.setId(rs.getInt("id"));
+                obj.setNome(rs.getString("nome"));
+                obj.setRg(rs.getString("rg"));
+                obj.setCpf(rs.getString("cpf"));
+                obj.setEmail(rs.getString("email"));
+                obj.setCelular(rs.getString("celular"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCep(rs.getString("cep"));
+                obj.setEndereco(rs.getString("enderco"));
+                obj.setNumero(rs.getInt("numero"));
+                obj.setComplemento(rs.getString("complemento"));
+                obj.setBairro(rs.getString("bairro"));
+                obj.setCidade(rs.getString("cidade"));
+                obj.setEstado(rs.getString("estado"));
+            }
+            return obj; 
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Cliente não consta na Base de Dados");
+            return null;
+        }    
+    }
+    
     public List<Clientes> buscaClienteNome(String nome){
         try {
             
