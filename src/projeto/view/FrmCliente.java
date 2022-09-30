@@ -5,6 +5,7 @@
  */
 package projeto.view;
 
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import projeto.dao.ClienteDAO;
@@ -213,8 +214,18 @@ public class FrmCliente extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        TxtCep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtCepActionPerformed(evt);
+            }
+        });
+        TxtCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TxtCepKeyPressed(evt);
+            }
+        });
 
-        CbUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AP", "PA", "CE", "RN" }));
+        CbUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
         BtPesquisar.setText("Pesquisar");
         BtPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -689,6 +700,24 @@ String nome = "%"+TxtPequisaDaTabela.getText()+"%";
          }); 
         }          // TODO add your handling code here:
     }//GEN-LAST:event_TxtPequisaDaTabelaKeyPressed
+
+    private void TxtCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtCepActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtCepActionPerformed
+
+    private void TxtCepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtCepKeyPressed
+        //Programacao do keypress
+	if (evt.getKeyCode() == KeyEvent.VK_ENTER) { 
+         Clientes obj =  new Clientes();
+         ClienteDAO dao = new ClienteDAO();
+         obj = dao.buscaCep(TxtCep.getText());
+         
+         TxtEndereco.setText(obj.getEndereco());
+         TxtBairro.setText(obj.getBairro());
+         TxtCidade.setText(obj.getCidade());
+         CbUf.setSelectedItem(obj.getEstado());                  
+     }
+    }//GEN-LAST:event_TxtCepKeyPressed
 
     /**
      * @param args the command line arguments
