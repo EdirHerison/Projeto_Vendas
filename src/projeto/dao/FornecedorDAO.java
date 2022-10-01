@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import projeto.connection.ConnectionFactory;
 import projeto.model.Fornecedores;
+import projeto.model.Funcionarios;
+import projeto.util.WebServiceCep;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -59,6 +61,26 @@ public class FornecedorDAO {
             JOptionPane.showMessageDialog(null,"Erro!!" + e);
         }
         
+    }
+    
+    public Funcionarios buscaCep(String cep) {
+       
+        WebServiceCep webServiceCep = WebServiceCep.searchCep(cep);
+       
+        Funcionarios obj = new Funcionarios();
+
+        if (webServiceCep.wasSuccessful()) {
+            obj.setEndereco(webServiceCep.getLogradouroFull());
+            obj.setCidade(webServiceCep.getCidade());
+            obj.setBairro(webServiceCep.getBairro());
+            obj.setEstado(webServiceCep.getUf());
+            return obj;
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro numero: " + webServiceCep.getResulCode());
+            JOptionPane.showMessageDialog(null, "Descrição do erro: " + webServiceCep.getResultText());
+            return null;
+        }
+
     }
     
 }
