@@ -581,24 +581,28 @@ public class FrmFuncionario extends javax.swing.JFrame {
     private void BtPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtPesquisarActionPerformed
         
             String nome = TxtNome.getText();
-            Clientes cli = new Clientes();
-            ClienteDAO dao = new ClienteDAO();
+            Funcionarios fun = new Funcionarios();
+            FuncionarioDAO dao = new FuncionarioDAO();
             
-            cli=dao.consultaClienteNome(nome);
+            fun=dao.pesquisarFuncNome(nome);
             
-        TxtCodigo.setText(String.valueOf(cli.getId()));
-        TxtNome.setText(cli.getNome());
-        TxtCpf.setText(cli.getCpf());
-        TxtEmail.setText(cli.getEmail());
-        TxtFixo.setText(cli.getTelefone());
-        TxtCelular.setText(cli.getCelular());
-        TxtCep.setText(cli.getCep());
-        TxtEndereco.setText(cli.getEndereco());
-        TxtNumero.setText(String.valueOf(cli.getNumero()));
-        TxtComplemento.setText(cli.getComplemento());
-        TxtBairro.setText(cli.getBairro());
-        TxtCidade.setText(cli.getCidade());
-        CbUf.setSelectedItem(cli.getEstado());
+        TxtCodigo.setText(String.valueOf(fun.getId()));
+        TxtNome.setText(fun.getNome());
+        TxtRG.setText(fun.getRg());
+        TxtCpf.setText(fun.getCpf());
+        TxtEmail.setText(fun.getEmail());
+        PwFuncionario.setText(fun.getSenha());
+        TxtCargo.setText(fun.getCargo());
+        CbNAcesso.setSelectedItem(fun.getNivelAcesso());
+        TxtFixo.setText(fun.getTelefone());
+        TxtCelular.setText(fun.getCelular());
+        TxtCep.setText(fun.getCep());
+        TxtEndereco.setText(fun.getEndereco());
+        TxtNumero.setText(String.valueOf(fun.getNumero()));
+        TxtComplemento.setText(fun.getComplemento());
+        TxtBairro.setText(fun.getBairro());
+        TxtCidade.setText(fun.getCidade());
+        CbUf.setSelectedItem(fun.getEstado());
         
         
  
@@ -694,33 +698,37 @@ public class FrmFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_TbFuncionariosMouseClicked
 
     private void BtAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtAlterarActionPerformed
-        Clientes cli = new Clientes();
+        Funcionarios fun = new Funcionarios();
             
-            cli.setNome(TxtNome.getText());
-            cli.setCpf(TxtCpf.getText());
-            cli.setEmail(TxtEmail.getText());
-            cli.setTelefone(TxtFixo.getText());
-            cli.setCelular(TxtCelular.getText());
-            cli.setCep(TxtCep.getText());
-            cli.setEndereco(TxtEndereco.getText());
-            cli.setNumero(Integer.parseInt(TxtNumero.getText()));
-            cli.setComplemento(TxtComplemento.getText());
-            cli.setBairro(TxtBairro.getText());
-            cli.setCidade(TxtCidade.getText());
-            cli.setEstado(CbUf.getSelectedItem().toString());
-            cli.setId(Integer.parseInt(TxtCodigo.getText()));
+            fun.setNome(TxtNome.getText());
+            fun.setRg(TxtRG.getText());
+            fun.setCpf(TxtCpf.getText());
+            fun.setEmail(TxtEmail.getText());
+            fun.setSenha(PwFuncionario.getText());
+            fun.setCargo(TxtCargo.getText());
+            fun.setNivelAcesso(CbNAcesso.getSelectedItem().toString());
+            fun.setTelefone(TxtFixo.getText());
+            fun.setCelular(TxtCelular.getText());
+            fun.setCep(TxtCep.getText());
+            fun.setEndereco(TxtEndereco.getText());
+            fun.setNumero(Integer.parseInt(TxtNumero.getText()));
+            fun.setComplemento(TxtComplemento.getText());
+            fun.setBairro(TxtBairro.getText());
+            fun.setCidade(TxtCidade.getText());
+            fun.setEstado(CbUf.getSelectedItem().toString());
+            fun.setId(Integer.parseInt(TxtCodigo.getText()));
             
-            ClienteDAO dao = new ClienteDAO();
-            dao.alterarCliente(cli);
+            FuncionarioDAO dao = new FuncionarioDAO();
+            dao.alterarFuncionario(fun);
             
             new Utilitarios().limpaTela(PnCadFun);
     }//GEN-LAST:event_BtAlterarActionPerformed
 
     private void BtExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtExcluirActionPerformed
-       Clientes cli = new Clientes();
-            cli.setId(Integer.parseInt(TxtCodigo.getText()));
-            ClienteDAO dao = new ClienteDAO();
-            dao.deletarCliente(cli);
+       Funcionarios fun = new Funcionarios();
+            fun.setId(Integer.parseInt(TxtCodigo.getText()));
+            FuncionarioDAO dao = new FuncionarioDAO();
+            dao.deletarFuncionario(fun);
             
             new Utilitarios().limpaTela(PnCadFun);
     }//GEN-LAST:event_BtExcluirActionPerformed
