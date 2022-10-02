@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import projeto.connection.ConnectionFactory;
 import projeto.model.Funcionarios;
@@ -99,6 +101,82 @@ public class FuncionarioDAO {
             JOptionPane.showMessageDialog(null, "Funcionário não consta na Base de Dados");
             return null;
         }
+    }
+    
+    public List<Funcionarios> buscaFuncNome(String nome){
+        try {
+            List<Funcionarios> list = new ArrayList<>();
+            String sql = "SELECT * FROM tb_funcionario WHERE nome LIKE ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, nome);
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()){
+                Funcionarios obj = new Funcionarios();
+                
+                obj.setId(rs.getInt("id"));
+                obj.setNome(rs.getString("nome"));
+                obj.setRg(rs.getString("rg"));
+                obj.setCpf(rs.getString("cpf"));
+                obj.setEmail(rs.getString("email"));
+                obj.setSenha(rs.getString("senha"));
+                obj.setCargo(rs.getString("cargo"));
+                obj.setNivelAcesso(rs.getString("nivel_acesso"));
+                obj.setCelular(rs.getString("celular"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCep(rs.getString("cep"));
+                obj.setEndereco(rs.getString("enderco"));
+                obj.setNumero(rs.getInt("numero"));
+                obj.setComplemento(rs.getString("complemento"));
+                obj.setBairro(rs.getString("bairro"));
+                obj.setCidade(rs.getString("cidade"));
+                obj.setEstado(rs.getString("estado"));
+                
+                list.add(obj);   
+            }
+             return list;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Erro !!" + e);
+            return null;
+        }
+    }
+    
+    public List<Funcionarios> listarFunci(){
+        try {
+            List<Funcionarios> list = new ArrayList<>();
+            String sql = "SELECT * FROM tb_funcionario";
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()){
+                Funcionarios obj = new Funcionarios();
+                
+                obj.setId(rs.getInt("id"));
+                obj.setNome(rs.getString("nome"));
+                obj.setRg(rs.getString("rg"));
+                obj.setCpf(rs.getString("cpf"));
+                obj.setEmail(rs.getString("email"));
+                obj.setSenha(rs.getString("senha"));
+                obj.setCargo(rs.getString("cargo"));
+                obj.setNivelAcesso(rs.getString("nivel_acesso"));
+                obj.setCelular(rs.getString("celular"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCep(rs.getString("cep"));
+                obj.setEndereco(rs.getString("enderco"));
+                obj.setNumero(rs.getInt("numero"));
+                obj.setComplemento(rs.getString("complemento"));
+                obj.setBairro(rs.getString("bairro"));
+                obj.setCidade(rs.getString("cidade"));
+                obj.setEstado(rs.getString("estado"));
+                
+                list.add(obj);   
+        }
+            return list;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Erro !!" + e);
+            return null;
+        }
+        
     }
     
     public void alterarFuncionario(Funcionarios obj){

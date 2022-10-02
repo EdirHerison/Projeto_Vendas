@@ -25,18 +25,21 @@ public class FrmFuncionario extends javax.swing.JFrame {
      */
     
     public void listar(){
-        ClienteDAO dao = new ClienteDAO();
-        List<Clientes> lista = dao.listarClientes();
+        FuncionarioDAO dao = new FuncionarioDAO();
+        List<Funcionarios> lista = dao.listarFunci();
         DefaultTableModel dados = (DefaultTableModel) TbFuncionarios.getModel();
         dados.setNumRows(0);
         
-        for(Clientes c : lista){
+        for(Funcionarios c : lista){
          dados.addRow(new Object[]{
          c.getId(),
          c.getNome(),
          c.getRg(),
          c.getCpf(),
          c.getEmail(),
+         c.getSenha(),
+         c.getCargo(),
+         c.getNivelAcesso(),
          c.getTelefone(),
          c.getCelular(),
          c.getCep(),
@@ -45,7 +48,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
          c.getComplemento(),
          c.getBairro(),
          c.getCidade(),
-         c.getEstado()       
+         c.getEstado()   
          }); 
         }
         
@@ -66,7 +69,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        PnDadosCliente = new javax.swing.JTabbedPane();
+        PnDadosFunci = new javax.swing.JTabbedPane();
         PnCadFun = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -457,7 +460,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        PnDadosCliente.addTab("Dados Pessoais", PnCadFun);
+        PnDadosFunci.addTab("Dados Pessoais", PnCadFun);
 
         jLabel17.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel17.setText("Nome:");
@@ -485,7 +488,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "CPF", "Email", "Senha", "Cargo", "Nivel de Acesso", "Telefone", "Celular", "CEP", "Endereço", "Numero", "Complemento", "Bairro", "Cidade", "Estado"
+                "Código", "Nome", "RG", "CPF", "Email", "Senha", "Cargo", "Nivel de Acesso", "Telefone", "Celular", "CEP", "Endereço", "Numero", "Complemento", "Bairro", "Cidade", "Estado"
             }
         ));
         TbFuncionarios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -551,7 +554,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        PnDadosCliente.addTab("Lista de Funcionários", PnTabela);
+        PnDadosFunci.addTab("Lista de Funcionários", PnTabela);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -561,7 +564,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(PnDadosCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 871, Short.MAX_VALUE)
+                    .addComponent(PnDadosFunci, javax.swing.GroupLayout.DEFAULT_SIZE, 871, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -572,7 +575,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addGap(0, 49, Short.MAX_VALUE)
-                    .addComponent(PnDadosCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(PnDadosFunci, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -648,18 +651,21 @@ public class FrmFuncionario extends javax.swing.JFrame {
     private void BtPesquisarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtPesquisarTabelaActionPerformed
          String nome = "%"+TxtPequisaDaTabela.getText()+"%";
         
-        ClienteDAO dao = new ClienteDAO();
-        List<Clientes> lista = dao.buscaClienteNome(nome);
+        FuncionarioDAO dao = new FuncionarioDAO();
+        List<Funcionarios> lista = dao.buscaFuncNome(nome);
         DefaultTableModel dados = (DefaultTableModel) TbFuncionarios.getModel();
         dados.setNumRows(0);
         
-        for(Clientes c : lista){
+        for(Funcionarios c : lista){
          dados.addRow(new Object[]{
          c.getId(),
          c.getNome(),
          c.getRg(),
          c.getCpf(),
          c.getEmail(),
+         c.getSenha(),
+         c.getCargo(),
+         c.getNivelAcesso(),
          c.getTelefone(),
          c.getCelular(),
          c.getCep(),
@@ -680,20 +686,24 @@ public class FrmFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void TbFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbFuncionariosMouseClicked
-        PnDadosCliente.setSelectedIndex(0);
+        PnDadosFunci.setSelectedIndex(0);
         TxtCodigo.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 0).toString());
         TxtNome.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 1).toString());
+        TxtRG.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 2).toString());
         TxtCpf.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 3).toString());
         TxtEmail.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 4).toString());
-        TxtFixo.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 5).toString());
-        TxtCelular.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 6).toString());
-        TxtCep.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 7).toString());
-        TxtEndereco.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 8).toString());
-        TxtNumero.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 9).toString());
-        TxtComplemento.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 10).toString());
-        TxtBairro.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 11).toString());
-        TxtCidade.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 12).toString());
-        CbUf.setSelectedItem(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 13).toString());
+        PwFuncionario.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(),5).toString());
+        TxtCargo.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 6).toString());
+        CbNAcesso.setSelectedItem(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 7).toString());
+        TxtFixo.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 8).toString());
+        TxtCelular.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 9).toString());
+        TxtCep.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 10).toString());
+        TxtEndereco.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 11).toString());
+        TxtNumero.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 12).toString());
+        TxtComplemento.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 13).toString());
+        TxtBairro.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 14).toString());
+        TxtCidade.setText(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 15).toString());
+        CbUf.setSelectedItem(TbFuncionarios.getValueAt(TbFuncionarios.getSelectedRow(), 16).toString());
         
     }//GEN-LAST:event_TbFuncionariosMouseClicked
 
@@ -738,20 +748,23 @@ public class FrmFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_TxtPequisaDaTabelaActionPerformed
 
     private void TxtPequisaDaTabelaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtPequisaDaTabelaKeyPressed
-String nome = "%"+TxtPequisaDaTabela.getText()+"%";
+         String nome = "%"+TxtPequisaDaTabela.getText()+"%";
         
-        ClienteDAO dao = new ClienteDAO();
-        List<Clientes> lista = dao.buscaClienteNome(nome);
+        FuncionarioDAO dao = new FuncionarioDAO();
+        List<Funcionarios> lista = dao.buscaFuncNome(nome);
         DefaultTableModel dados = (DefaultTableModel) TbFuncionarios.getModel();
         dados.setNumRows(0);
         
-        for(Clientes c : lista){
+        for(Funcionarios c : lista){
          dados.addRow(new Object[]{
          c.getId(),
          c.getNome(),
          c.getRg(),
          c.getCpf(),
          c.getEmail(),
+         c.getSenha(),
+         c.getCargo(),
+         c.getNivelAcesso(),
          c.getTelefone(),
          c.getCelular(),
          c.getCep(),
@@ -760,7 +773,7 @@ String nome = "%"+TxtPequisaDaTabela.getText()+"%";
          c.getComplemento(),
          c.getBairro(),
          c.getCidade(),
-         c.getEstado()       
+         c.getEstado()        
          }); 
         }          // TODO add your handling code here:
     }//GEN-LAST:event_TxtPequisaDaTabelaKeyPressed
@@ -842,7 +855,7 @@ String nome = "%"+TxtPequisaDaTabela.getText()+"%";
     private javax.swing.JComboBox<String> CbNAcesso;
     private javax.swing.JComboBox<String> CbUf;
     private javax.swing.JPanel PnCadFun;
-    private javax.swing.JTabbedPane PnDadosCliente;
+    private javax.swing.JTabbedPane PnDadosFunci;
     private javax.swing.JPanel PnTabela;
     private javax.swing.JPasswordField PwFuncionario;
     private javax.swing.JTable TbFuncionarios;
