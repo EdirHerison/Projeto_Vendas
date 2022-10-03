@@ -4,6 +4,9 @@
  */
 package projeto.view;
 
+import javax.swing.JOptionPane;
+import projeto.dao.FuncionarioDAO;
+
 /**
  *
  * @author edir_
@@ -155,7 +158,16 @@ public class FrmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtEntrarActionPerformed
-        // TODO add your handling code here:
+        try {
+            String email, senha;
+            email=TxtUserLogin.getText();
+            senha=PwLogin.getText();
+            
+            FuncionarioDAO dao = new FuncionarioDAO();
+            dao.login(email, senha);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro");
+        }
     }//GEN-LAST:event_BtEntrarActionPerformed
 
     /**

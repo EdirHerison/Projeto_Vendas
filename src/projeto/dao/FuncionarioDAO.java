@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import projeto.connection.ConnectionFactory;
 import projeto.model.Funcionarios;
 import projeto.util.WebServiceCep;
+import projeto.view.FrnMenu;
 
 /**
  *
@@ -259,6 +260,27 @@ public class FuncionarioDAO {
             return null;
         }
 
+    }
+    
+    public void login(String email, String senha){
+        try {
+            String sql ="SELECT * FROM tb_funcionario WHERE email= ? and senha= ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, email);
+            st.setString(2, senha);
+            ResultSet rs = st.executeQuery();
+            
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null, "Bem vindo ao SCV");
+                FrnMenu tela = new FrnMenu();
+                tela.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Falha ao acessar o sistema");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro!!" + e);
+        }
     }
     
 }
