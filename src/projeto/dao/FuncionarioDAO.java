@@ -273,6 +273,7 @@ public class FuncionarioDAO {
             if(rs.next()){
                 JOptionPane.showMessageDialog(null, "Bem vindo ao SCV");
                 FrnMenu tela = new FrnMenu();
+                tela.usuariologado=rs.getString("nome");
                 tela.setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(null, "Falha ao acessar o sistema");
