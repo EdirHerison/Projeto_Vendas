@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import projeto.connection.ConnectionFactory;
 import projeto.model.Funcionarios;
 import projeto.util.WebServiceCep;
+import projeto.view.FrmLogin;
 import projeto.view.FrnMenu;
 
 /**
@@ -277,6 +278,7 @@ public class FuncionarioDAO {
                 tela.setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(null, "Falha ao acessar o sistema");
+                new FrmLogin().setVisible(true);
             }
             
         } catch (Exception e) {

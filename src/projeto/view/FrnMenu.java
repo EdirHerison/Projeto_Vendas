@@ -6,7 +6,10 @@ package projeto.view;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -19,6 +22,9 @@ public class FrnMenu extends javax.swing.JFrame {
      */
     
     public String usuariologado;
+    public long data = new Date().getTime();
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     public FrnMenu() {
         initComponents();
@@ -45,6 +51,8 @@ public class FrnMenu extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         LabUsuario = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        LabDate = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuCliente = new javax.swing.JMenuItem();
@@ -89,6 +97,12 @@ public class FrnMenu extends javax.swing.JFrame {
         LabUsuario.setForeground(new java.awt.Color(0, 0, 204));
         LabUsuario.setText("User");
 
+        jLabel2.setText("Data:");
+
+        LabDate.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LabDate.setForeground(new java.awt.Color(255, 153, 0));
+        LabDate.setText("date");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -98,7 +112,11 @@ public class FrnMenu extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(LabUsuario)
-                .addContainerGap(796, Short.MAX_VALUE))
+                .addGap(65, 65, 65)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(LabDate)
+                .addContainerGap(645, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,7 +124,9 @@ public class FrnMenu extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(LabUsuario)))
+                    .addComponent(LabUsuario)
+                    .addComponent(jLabel2)
+                    .addComponent(LabDate)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -160,6 +180,11 @@ public class FrnMenu extends javax.swing.JFrame {
         jMenu3.setText("Fornecedores");
 
         jMenuItem1.setText("Controle de Forncedores");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem1);
 
         jMenuBar1.add(jMenu3);
@@ -225,6 +250,7 @@ public class FrnMenu extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
        this.setExtendedState(this.MAXIMIZED_BOTH);
        LabUsuario.setText(usuariologado);
+       LabDate.setText(sdf.format(data));
        this.setVisible(true);
     }//GEN-LAST:event_formWindowActivated
 
@@ -232,6 +258,11 @@ public class FrnMenu extends javax.swing.JFrame {
         FrmFuncionario telaFun = new FrmFuncionario();
                  telaFun.setVisible(true);
     }//GEN-LAST:event_menuFunciActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        FrmFornecedor telaForn = new FrmFornecedor();
+                 telaForn.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,8 +301,10 @@ public class FrnMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane DesPainel;
+    private javax.swing.JLabel LabDate;
     private javax.swing.JLabel LabUsuario;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
