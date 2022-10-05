@@ -97,15 +97,16 @@ public class FornecedorDAO {
         }
     }
     
-    public Fornecedores buscaFornecedorNome(String nome){
+    public List<Fornecedores> buscaFornecedorNome(String nome){
         try {
-            String sql = "SELECT * FROM tb_fornecedores WHERE nome LIKE = ?";
+            List<Fornecedores> lista = new ArrayList<>();
+            String sql = "SELECT * FROM tb_fornecedores WHERE nome LIKE ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, nome);
             ResultSet rs = st.executeQuery();
-            Fornecedores forn = new Fornecedores();
             
             if(rs.next()){
+                Fornecedores forn = new Fornecedores();
                 forn.setId(rs.getInt("id"));
                 forn.setNome(rs.getString("nome"));
                 forn.setCnpj(rs.getString("cnpj"));
@@ -119,12 +120,44 @@ public class FornecedorDAO {
                 forn.setBairro(rs.getNString("bairro"));
                 forn.setCidade(rs.getString("cidade"));
                 forn.setEstado(rs.getString("estado"));
-               
+               lista.add(forn);
             }
-             return forn;
+             return lista;
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Fornecedor não consta na Base de Dados");
+            return null;
         }
-        return null;
+    }
+    
+    public Fornecedores consultaFornNome(String nome){
+        try {
+            String sql = "SELECT * FROM tb_fornecedores WHERE nome = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, nome);
+            ResultSet rs = st.executeQuery();
+            Fornecedores forn = new Fornecedores();
+            
+            if(rs.next()){
+               forn.setId(rs.getInt("id"));
+                forn.setNome(rs.getString("nome"));
+                forn.setCnpj(rs.getString("cnpj"));
+                forn.setEmail(rs.getString("email"));
+                forn.setTelefone(rs.getString("telefone"));
+                forn.setCelular(rs.getString("celular"));
+                forn.setCep(rs.getString("cep"));
+                forn.setEndereco(rs.getString("endereco"));
+                forn.setNumero(rs.getInt("numero"));
+                forn.setComplemento(rs.getString("complemento"));
+                forn.setBairro(rs.getNString("bairro"));
+                forn.setCidade(rs.getString("cidade"));
+                forn.setEstado(rs.getString("estado")); 
+            }
+            return forn;
+           
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Fornecedor não consta na Base de Dados");
+            return null;
+        }
     }
     
     public void alteraFornecedor(Fornecedores obj){

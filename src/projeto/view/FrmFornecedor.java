@@ -516,13 +516,13 @@ public class FrmFornecedor extends javax.swing.JFrame {
         
             String nome = TxtNome.getText();
             Fornecedores fun = new Fornecedores();
-            FuncionarioDAO dao = new FuncionarioDAO();
+            FornecedorDAO dao = new FornecedorDAO();
             
-            
+            fun = dao.consultaFornNome(nome);
             
         TxtCodigo.setText(String.valueOf(fun.getId()));
         TxtNome.setText(fun.getNome());
-        TxtCnpj.setText(fun.getCpf());
+        TxtCnpj.setText(fun.getCnpj());
         TxtEmail.setText(fun.getEmail());
         TxtFixo.setText(fun.getTelefone());
         TxtCelular.setText(fun.getCelular());
@@ -570,7 +570,7 @@ public class FrmFornecedor extends javax.swing.JFrame {
          String nome = "%"+TxtPequisaDaTabela.getText()+"%";
         
         FornecedorDAO dao = new FornecedorDAO();
-        List<Fornecedores> lista = (List<Fornecedores>) dao.buscaFornecedorNome(nome);
+        List<Fornecedores> lista = dao.buscaFornecedorNome(nome);
         DefaultTableModel dados = (DefaultTableModel) TbFornecedores.getModel();
         dados.setNumRows(0);
         
@@ -653,34 +653,30 @@ public class FrmFornecedor extends javax.swing.JFrame {
     }//GEN-LAST:event_TxtPequisaDaTabelaActionPerformed
 
     private void TxtPequisaDaTabelaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtPequisaDaTabelaKeyPressed
-//         String nome = "%"+TxtPequisaDaTabela.getText()+"%";
-//        
-//        FuncionarioDAO dao = new FuncionarioDAO();
-//        List<Funcionarios> lista = dao.buscaFuncNome(nome);
-//        DefaultTableModel dados = (DefaultTableModel) TbFornecedore.getModel();
-//        dados.setNumRows(0);
-//        
-//        for(Funcionarios c : lista){
-//         dados.addRow(new Object[]{
-//         c.getId(),
-//         c.getNome(),
-//         c.getRg(),
-//         c.getCpf(),
-//         c.getEmail(),
-//         c.getSenha(),
-//         c.getCargo(),
-//         c.getNivelAcesso(),
-//         c.getTelefone(),
-//         c.getCelular(),
-//         c.getCep(),
-//         c.getEndereco(),
-//         c.getNumero(),
-//         c.getComplemento(),
-//         c.getBairro(),
-//         c.getCidade(),
-//         c.getEstado()        
-//         }); 
-//        }          
+         String nome = "%"+TxtPequisaDaTabela.getText()+"%";
+        
+        FornecedorDAO dao = new FornecedorDAO();
+        List<Fornecedores> lista = (List<Fornecedores>) dao.buscaFornecedorNome(nome);
+        DefaultTableModel dados = (DefaultTableModel) TbFornecedores.getModel();
+        dados.setNumRows(0);
+        
+        for(Fornecedores c : lista){
+         dados.addRow(new Object[]{
+         c.getId(),
+         c.getNome(),
+         c.getCnpj(),
+         c.getEmail(),
+         c.getTelefone(),
+         c.getCelular(),
+         c.getCep(),
+         c.getEndereco(),
+         c.getNumero(),
+         c.getComplemento(),
+         c.getBairro(),
+         c.getCidade(),
+         c.getEstado()        
+         }); 
+        }          
     }//GEN-LAST:event_TxtPequisaDaTabelaKeyPressed
 
     private void TxtCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtCepActionPerformed
