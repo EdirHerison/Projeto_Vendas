@@ -70,6 +70,10 @@ public Produtos (){
         this.fornecedor = fornecedor;
     }
 
+    public Object Fornecedores() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 
     
 }
