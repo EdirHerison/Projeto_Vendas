@@ -183,6 +183,11 @@ public class FrmProduto extends javax.swing.JFrame {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
+        CbFornecedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CbFornecedorMouseClicked(evt);
+            }
+        });
         CbFornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CbFornecedorActionPerformed(evt);
@@ -547,6 +552,15 @@ String nome = "%"+TxtPequisaDaTabela.getText()+"%";
             CbFornecedor.addItem(f);
         }
     }//GEN-LAST:event_CbFornecedorAncestorAdded
+
+    private void CbFornecedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CbFornecedorMouseClicked
+        FornecedorDAO dao = new FornecedorDAO();
+        List<Fornecedores> listaForn = dao.listaFornecedores();
+        CbFornecedor.removeAllItems();
+        for (Fornecedores f : listaForn){
+        CbFornecedor.addItem(f);
+    }
+    }//GEN-LAST:event_CbFornecedorMouseClicked
 
     /**
      * @param args the command line arguments
