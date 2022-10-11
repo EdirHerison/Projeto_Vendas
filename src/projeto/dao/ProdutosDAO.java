@@ -12,10 +12,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import projeto.connection.ConnectionFactory;
-import projeto.model.Clientes;
 import projeto.model.Fornecedores;
 import projeto.model.Produtos;
-import projeto.util.WebServiceCep;
+
 
 /**
  *
@@ -119,6 +118,38 @@ public class ProdutosDAO {
             JOptionPane.showMessageDialog(null, "Produto não consta na Base de Dados");
             return null;
         }    
+    }
+    
+    public Produtos buscaCdodigo (int codigo){
+        try {
+            String sql = "SELECT p.id, p.descricao, p.preco, p.qtd_estoque, f.nome "
+                    + "FROM tb_produtos as p "
+                    + "INNER JOIN tb_fornecedores as f on (p.for_id = f.id) "
+                    + "WHERE p.id = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, codigo);
+            ResultSet rs = st.executeQuery();
+            Produtos obj = new Produtos();
+            Fornecedores forn = new Fornecedores();
+            
+            if(rs.next()){
+                
+                obj.setId(rs.getInt("p.id"));
+                obj.setDescricao(rs.getString("p.descricao"));
+                obj.setQtdEstoque(rs.getInt("p.qtd_estoque"));
+                obj.setPreco(rs.getDouble("p.preco"));
+                
+                forn.setNome(rs.getString(("f.nome")));
+                
+                obj.setFornecedor(forn);
+                
+            }
+            return obj;
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Produto não consta na Base de Dados");
+            return null;
+        }
     }
     
     public List<Produtos> buscaProdutosNome(String nome){

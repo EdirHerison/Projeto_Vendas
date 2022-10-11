@@ -132,6 +132,37 @@ public class ClienteDAO {
         }    
     }
     
+    public Clientes buscaCPF(String cpf){
+        try {
+            String sql = "SELECT * FROM tb_clientes WHERE cpf = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, cpf);
+            ResultSet rs = st.executeQuery();
+            Clientes cli = new Clientes();
+            
+            if(rs.next()){
+                cli.setId(rs.getInt("id"));
+                cli.setNome(rs.getString("nome"));
+                cli.setRg(rs.getString("rg"));
+                cli.setCpf(rs.getString("cpf"));
+                cli.setEmail(rs.getString("email"));
+                cli.setCelular(rs.getString("celular"));
+                cli.setTelefone(rs.getString("telefone"));
+                cli.setCep(rs.getString("cep"));
+                cli.setEndereco(rs.getString("enderco"));
+                cli.setNumero(rs.getInt("numero"));
+                cli.setComplemento(rs.getString("complemento"));
+                cli.setBairro(rs.getString("bairro"));
+                cli.setCidade(rs.getString("cidade"));
+                cli.setEstado(rs.getString("estado"));
+            }
+            return cli;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "CPF não encontrado na Base de Dados");
+            return null;
+        }  
+    }
+    
     public List<Clientes> buscaClienteNome(String nome){
         try {
             
