@@ -8,16 +8,11 @@ package projeto.view;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import projeto.dao.ClienteDAO;
-import projeto.dao.FornecedorDAO;
 import projeto.dao.ProdutosDAO;
 import projeto.model.Clientes;
-import projeto.model.Fornecedores;
 import projeto.model.Produtos;
-import projeto.util.Utilitarios;
 
 /**
  *
@@ -29,23 +24,10 @@ public class FrmVendas extends javax.swing.JFrame {
      * Creates new form CadClient
      */
     
-    public void listar(){
-        ProdutosDAO dao = new ProdutosDAO();
-        List<Produtos> lista = dao.listarProdutos();
-        DefaultTableModel dados = (DefaultTableModel) TbProdutos.getModel();
-        dados.setNumRows(0);
-        
-        for(Produtos c : lista){
-         dados.addRow(new Object[]{
-         c.getId(),
-         c.getDescricao(),
-         c.getQtdEstoque(),
-         c.getPreco(),
-         c.getFornecedor().getNome(),    
-         }); 
-        }
-        
-    }
+   double total, preco, subtotal;
+   int qtd;
+   
+    DefaultTableModel itensVenda;
     
     public FrmVendas() {
         initComponents();
@@ -236,6 +218,11 @@ public class FrmVendas extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jButton1.setText("Adicionar Item");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout JPainelProdutoLayout = new javax.swing.GroupLayout(JPainelProduto);
         JPainelProduto.setLayout(JPainelProdutoLayout);
@@ -292,15 +279,12 @@ public class FrmVendas extends javax.swing.JFrame {
                 .addContainerGap(84, Short.MAX_VALUE))
         );
 
-        JPainelVenda.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Venda", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Times New Roman", 1, 14), new java.awt.Color(0, 0, 204))); // NOI18N
+        JPainelVenda.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Itens da Compra", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Times New Roman", 1, 14), new java.awt.Color(0, 0, 204))); // NOI18N
 
         TbVendas.setBackground(new java.awt.Color(204, 255, 204));
         TbVendas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Código", "Produto", "Quantidade", "Preço", "SubTotal"
@@ -313,6 +297,8 @@ public class FrmVendas extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel9.setText("Total:");
+
+        TxtTotalVenda.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
 
         BtPagamento.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         BtPagamento.setText("Pagamento");
@@ -335,9 +321,9 @@ public class FrmVendas extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(BtPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
+                        .addGap(18, 18, 18)
                         .addComponent(BtCnacelar, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24))))
+                        .addGap(47, 47, 47))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,10 +332,11 @@ public class FrmVendas extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(TxtTotalVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtCnacelar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(BtCnacelar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -440,6 +427,27 @@ public class FrmVendas extends javax.swing.JFrame {
             TxtProdutoVenda.setText(prod.getDescricao());
             TxtPUnitariVenda.setText(String.valueOf(prod.getPreco()));
     }//GEN-LAST:event_BtPesquisarProdutosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        qtd = Integer.parseInt(TxtQtdItemVenda.getText());
+        preco = Double.parseDouble(TxtPUnitariVenda.getText());
+        
+        subtotal = qtd * preco;
+        
+        total += subtotal;
+        
+        TxtTotalVenda.setText(String.valueOf(total));
+        
+        itensVenda = (DefaultTableModel)TbVendas.getModel();
+        
+        itensVenda.addRow(new Object[]{
+            TxtCodigoItemVenda.getText(),
+            TxtProdutoVenda.getText(),
+            TxtQtdItemVenda.getText(),
+            TxtPUnitariVenda.getText(),
+            subtotal
+        });
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
