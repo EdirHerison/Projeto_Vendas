@@ -8,6 +8,7 @@ package projeto.view;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import projeto.dao.ClienteDAO;
 import projeto.dao.ProdutosDAO;
@@ -302,6 +303,11 @@ public class FrmVendas extends javax.swing.JFrame {
 
         BtPagamento.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         BtPagamento.setText("Pagamento");
+        BtPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtPagamentoActionPerformed(evt);
+            }
+        });
 
         BtCnacelar.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         BtCnacelar.setText("Cancelar ");
@@ -432,22 +438,26 @@ public class FrmVendas extends javax.swing.JFrame {
         qtd = Integer.parseInt(TxtQtdItemVenda.getText());
         preco = Double.parseDouble(TxtPUnitariVenda.getText());
         
-        subtotal = qtd * preco;
+          subtotal = qtd * preco;
+          total += subtotal;
+          TxtTotalVenda.setText(String.valueOf(total));
         
-        total += subtotal;
-        
-        TxtTotalVenda.setText(String.valueOf(total));
-        
-        itensVenda = (DefaultTableModel)TbVendas.getModel();
-        
-        itensVenda.addRow(new Object[]{
+          itensVenda = (DefaultTableModel)TbVendas.getModel();
+           itensVenda.addRow(new Object[]{
             TxtCodigoItemVenda.getText(),
             TxtProdutoVenda.getText(),
             TxtQtdItemVenda.getText(),
             TxtPUnitariVenda.getText(),
-            subtotal
-        });
+            subtotal 
+          }); 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void BtPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtPagamentoActionPerformed
+        FrmPagamento telaPag = new FrmPagamento();
+        telaPag.TxtTotal.setText(String.valueOf(total));
+        telaPag.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BtPagamentoActionPerformed
 
     /**
      * @param args the command line arguments

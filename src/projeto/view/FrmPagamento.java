@@ -15,6 +15,10 @@ public class FrmPagamento extends javax.swing.JFrame {
      */
     public FrmPagamento() {
         initComponents();
+        TxtCartao.setText("0");
+        TxtCheque.setText("0");
+        TxtDinheiro.setText("0");
+        TxtTroco.setText("0");
     }
 
     /**
@@ -80,6 +84,16 @@ public class FrmPagamento extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel6.setText("Troco:");
+
+        TxtCartao.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+
+        TxtDinheiro.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+
+        TxtCheque.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+
+        TxtTroco.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+
+        TxtTotal.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
 
         BtFinalVenda.setText("Finalizar");
         BtFinalVenda.addActionListener(new java.awt.event.ActionListener() {
@@ -148,10 +162,24 @@ public class FrmPagamento extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtFinalVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtFinalVendaActionPerformed
-        // TODO add your handling code here:
+       double pagCartao, pagCheque, pagDinheiro,totalpago, totalVenda, troco;
+       
+       pagCartao = Double.parseDouble(TxtCartao.getText());
+       pagCheque = Double.parseDouble(TxtCheque.getText());
+       pagDinheiro = Double.parseDouble(TxtDinheiro.getText());
+       
+       totalVenda = Double.parseDouble(TxtTotal.getText());
+       
+       totalpago = pagCartao + pagCheque + pagDinheiro;
+       
+       troco = totalpago - totalVenda;
+       
+       TxtTroco.setText(String.valueOf(troco));
+       
     }//GEN-LAST:event_BtFinalVendaActionPerformed
 
     /**
@@ -194,7 +222,7 @@ public class FrmPagamento extends javax.swing.JFrame {
     private javax.swing.JTextField TxtCartao;
     private javax.swing.JTextField TxtCheque;
     private javax.swing.JTextField TxtDinheiro;
-    private javax.swing.JTextField TxtTotal;
+    public javax.swing.JTextField TxtTotal;
     private javax.swing.JTextField TxtTroco;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
